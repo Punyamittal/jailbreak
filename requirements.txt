@@ -1,0 +1,15 @@
+# Anti-Jailbreak Security System
+# Python 3.8+ required
+
+# Core dependencies
+python-dotenv>=1.0.0  # For loading .env files
+google-generativeai>=0.3.0  # For Gemini API integration
+
+# ML dependencies
+scikit-learn>=1.0.0  # For machine learning models
+numpy>=1.21.0  # For numerical operations
+
+# Optional: For enhanced functionality (future)
+# scikit-learn>=1.0.0  # For ML-based anomaly detection
+# numpy>=1.21.0  # For statistical analysis
+
