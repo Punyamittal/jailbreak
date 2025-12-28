@@ -42,3 +42,13 @@ ENV/
 .DS_Store
 Thumbs.db
 
+# Large dataset files (too big for GitHub)
+formatted_dataset.csv
+raw_dataset.csv
+synthetic_dataset.csv
+synthetic_prompts.txt
+*.csv
+*.txt
+!malignant.csv
+!requirements.txt
+
