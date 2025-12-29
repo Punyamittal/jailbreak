@@ -255,7 +255,7 @@ class AntiJailbreakMLModel:
 
 
 def train_model(
-    dataset_path: str = "datasets/malignant_labeled.jsonl",
+    dataset_path: str = "datasets/combined_training_dataset.jsonl",
     model_type: str = "logistic_regression",
     save_model: bool = True
 ):
@@ -317,7 +317,7 @@ def test_model(model: AntiJailbreakMLModel):
 if __name__ == "__main__":
     # Train model
     model = train_model(
-        dataset_path="datasets/malignant_labeled.jsonl",
+        dataset_path="datasets/combined_training_dataset.jsonl",
         model_type="logistic_regression",  # or "random_forest"
         save_model=True
     )
