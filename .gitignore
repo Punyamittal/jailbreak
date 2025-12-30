@@ -52,3 +52,14 @@ synthetic_prompts.txt
 !malignant.csv
 !requirements.txt
 
+# Large dataset files (>50MB) - excluded from git
+datasets/combined_*.jsonl
+datasets/all_datasets_combined.jsonl
+datasets/formatted_processed.jsonl
+datasets/relabeled/relabeled_*.jsonl
+datasets/relabeled/all_relabeled_combined.jsonl
+
+# Large model files (>50MB) - excluded from git
+models/intent_detector.pkl
+models/threshold_model.pkl
+
