@@ -1,0 +1,79 @@
+{
+  "test_dataset": {
+    "file": "prompt-injection-dataset.csv",
+    "total_prompts": 116,
+    "label_distribution": {
+      "jailbreak_attempt": 60,
+      "benign": 56
+    }
+  },
+  "rule_based": {
+    "detector": "Rule-Based Detector",
+    "accuracy": 0.603448275862069,
+    "precision": 1.0,
+    "recall": 0.23333333333333334,
+    "f1": 0.3783783783783784,
+    "false_negatives": 46,
+    "false_positives": 0,
+    "false_negative_rate": 0.7666666666666667,
+    "false_positive_rate": 0.0,
+    "confusion_matrix": [
+      [
+        56,
+        0
+      ],
+      [
+        46,
+        14
+      ]
+    ],
+    "rule_catches": 14,
+    "ml_catches": 0
+  },
+  "ml_model": {
+    "detector": "ML Model",
+    "accuracy": 0.5,
+    "precision": 0.5087719298245614,
+    "recall": 0.9666666666666667,
+    "f1": 0.6666666666666666,
+    "false_negatives": 2,
+    "false_positives": 56,
+    "false_negative_rate": 0.03333333333333333,
+    "false_positive_rate": 1.0,
+    "confusion_matrix": [
+      [
+        0,
+        56
+      ],
+      [
+        2,
+        58
+      ]
+    ],
+    "rule_catches": 0,
+    "ml_catches": 114
+  },
+  "hybrid": {
+    "detector": "Hybrid Detector (Rule + ML)",
+    "accuracy": 0.5775862068965517,
+    "precision": 0.569620253164557,
+    "recall": 0.75,
+    "f1": 0.6474820143884892,
+    "false_negatives": 15,
+    "false_positives": 34,
+    "false_negative_rate": 0.25,
+    "false_positive_rate": 0.6071428571428571,
+    "confusion_matrix": [
+      [
+        22,
+        34
+      ],
+      [
+        15,
+        45
+      ]
+    ],
+    "rule_catches": 12,
+    "ml_catches": 67
+  }
+}

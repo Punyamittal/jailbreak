@@ -1,0 +1,70 @@
+{
+  "test_datasets": {
+    "adv_prompts": 400,
+    "viccuna_prompts": 520,
+    "total": 920
+  },
+  "rule_based": {
+    "detector": "Rule-Based Detector",
+    "accuracy": 0.002173913043478261,
+    "precision": 1.0,
+    "recall": 0.002173913043478261,
+    "f1": 0.004338394793926247,
+    "false_negatives": 918,
+    "false_positives": 0,
+    "false_negative_rate": 0.9978260869565218,
+    "false_positive_rate": 0.0,
+    "confusion_matrix": [
+      [
+        0,
+        0
+      ],
+      [
+        918,
+        2
+      ]
+    ]
+  },
+  "ml_model": {
+    "detector": "ML Model",
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "false_negatives": 0,
+    "false_positives": 0,
+    "false_negative_rate": 0.0,
+    "false_positive_rate": 0.0,
+    "confusion_matrix": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        920
+      ]
+    ]
+  },
+  "hybrid": {
+    "detector": "Hybrid Detector (Rule + ML)",
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "false_negatives": 0,
+    "false_positives": 0,
+    "false_negative_rate": 0.0,
+    "false_positive_rate": 0.0,
+    "confusion_matrix": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        920
+      ]
+    ]
+  }
+}

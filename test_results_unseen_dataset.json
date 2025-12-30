@@ -1,0 +1,23 @@
+{
+  "dataset": "Prompt_INJECTION_And_Benign_DATASET.jsonl",
+  "total_prompts": 500,
+  "label_distribution": {
+    "jailbreak_attempt": 250,
+    "benign": 250
+  },
+  "results": {
+    "accuracy": 0.9,
+    "precision": 0.8333333333333334,
+    "recall": 1.0,
+    "f1": 0.9090909090909091,
+    "tn": 200,
+    "fp": 50,
+    "fn": 0,
+    "tp": 250,
+    "fn_rate": 0.0,
+    "fp_rate": 0.2,
+    "whitelist_count": 200,
+    "rule_count": 216,
+    "ml_count": 0
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "benchmark_date": "1767120851.350562",
+  "model_version": "v1.1_with_escalation_fix",
+  "datasets": [
+    {
+      "dataset": "Prompt Injection Dataset",
+      "total_prompts": 500,
+      "label_distribution": {
+        "jailbreak_attempt": 250,
+        "benign": 250
+      },
+      "accuracy": 0.9,
+      "precision": 0.8333333333333334,
+      "recall": 1.0,
+      "f1_score": 0.9090909090909091,
+      "true_positives": 250,
+      "true_negatives": 200,
+      "false_positives": 50,
+      "false_negatives": 0,
+      "false_negative_rate": 0.0,
+      "false_positive_rate": 0.2,
+      "confusion_matrix": [
+        [
+          200,
+          50
+        ],
+        [
+          0,
+          250
+        ]
+      ],
+      "detection_breakdown": {
+        "whitelist": 200,
+        "rule_based": 216,
+        "ml_based": 84
+      },
+      "meets_security_requirements": 

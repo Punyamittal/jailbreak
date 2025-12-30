@@ -1,0 +1,79 @@
+{
+  "test_dataset": {
+    "file": "AI Agent Evasion Dataset.jsonl",
+    "total_prompts": 1000,
+    "label_distribution": {
+      "jailbreak_attempt": 500,
+      "benign": 500
+    }
+  },
+  "rule_based": {
+    "detector": "Rule-Based Detector",
+    "accuracy": 0.719,
+    "precision": 0.9040590405904059,
+    "recall": 0.49,
+    "f1": 0.6355382619974059,
+    "false_negatives": 255,
+    "false_positives": 26,
+    "false_negative_rate": 0.51,
+    "false_positive_rate": 0.052,
+    "confusion_matrix": [
+      [
+        474,
+        26
+      ],
+      [
+        255,
+        245
+      ]
+    ],
+    "rule_catches": 271,
+    "ml_catches": 0
+  },
+  "ml_model": {
+    "detector": "ML Model",
+    "accuracy": 0.5,
+    "precision": 0.5,
+    "recall": 1.0,
+    "f1": 0.6666666666666666,
+    "false_negatives": 0,
+    "false_positives": 500,
+    "false_negative_rate": 0.0,
+    "false_positive_rate": 1.0,
+    "confusion_matrix": [
+      [
+        0,
+        500
+      ],
+      [
+        0,
+        500
+      ]
+    ],
+    "rule_catches": 0,
+    "ml_catches": 1000
+  },
+  "hybrid": {
+    "detector": "Hybrid Detector (Rule + ML)",
+    "accuracy": 0.715,
+    "precision": 0.6369426751592356,
+    "recall": 1.0,
+    "f1": 0.7782101167315175,
+    "false_negatives": 0,
+    "false_positives": 285,
+    "false_negative_rate": 0.0,
+    "false_positive_rate": 0.57,
+    "confusion_matrix": [
+      [
+        215,
+        285
+      ],
+      [
+        0,
+        500
+      ]
+    ],
+    "rule_catches": 262,
+    "ml_catches": 523
+  }
+}
