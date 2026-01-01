@@ -210,7 +210,10 @@ def main():
         ml_model=model,
         jailbreak_threshold=0.15,
         prefer_false_positives=True,
-        enable_whitelist=True
+        enable_whitelist=True,
+        enable_escalation=True,  # Enable escalation layer for v1.1
+        escalation_low_threshold=0.25,
+        escalation_high_threshold=0.55
     )
     print(f"  [OK] Detector created")
     print(f"      Threshold: {detector.jailbreak_threshold}")

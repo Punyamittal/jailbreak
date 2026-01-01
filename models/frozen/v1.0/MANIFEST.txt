@@ -1,0 +1,36 @@
+======================================================================
+MODEL FREEZE MANIFEST
+======================================================================
+
+Version: v1.0
+Date: 2025-12-30
+Timestamp: 2025-12-30T22:26:10.482867
+Description: Production-ready model with 98.8% recall
+
+Model Files:
+  ✓ security_model.pkl
+  ✓ security_vectorizer.pkl
+  ✓ security_encoder.pkl
+  ✓ security_threshold.txt
+
+Model Complete: Yes
+Threshold: 0.15
+
+Performance Metrics (Unseen Dataset):
+  Accuracy: 89.40%
+  Precision: 83.16%
+  Recall: 98.80%
+  F1-Score: 90.31%
+  FN Rate: 1.20%
+  FP Rate: 20.00%
+
+Configuration:
+  jailbreak_threshold: 0.15
+  prefer_false_positives: True
+  enable_whitelist: True
+  model_type: SecurityJailbreakModel
+  features:
+    - Benign Whitelist (40.6% of prompts)
+    - Rule-Based Detection (36.4% of prompts)
+    - ML Classifier (23.0% of prompts)
+    - Hybrid Decision Logic

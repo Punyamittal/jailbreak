@@ -43,23 +43,54 @@ ENV/
 Thumbs.db
 
 # Large dataset files (too big for GitHub)
-formatted_dataset.csv
-raw_dataset.csv
-synthetic_dataset.csv
-synthetic_prompts.txt
 *.csv
+*.jsonl
 *.txt
 !malignant.csv
 !requirements.txt
+!README.md
+!*.md
 
-# Large dataset files (>50MB) - excluded from git
-datasets/combined_*.jsonl
-datasets/all_datasets_combined.jsonl
-datasets/formatted_processed.jsonl
-datasets/relabeled/relabeled_*.jsonl
-datasets/relabeled/all_relabeled_combined.jsonl
+# Model files (binary, large)
+*.pkl
+models/**/*.pkl
+models/**/*.txt
+!models/frozen/**/MANIFEST.txt
+!models/frozen/**/metadata.json
+!models/frozen/**/restore_model.py
 
-# Large model files (>50MB) - excluded from git
-models/intent_detector.pkl
-models/threshold_model.pkl
+# Test results and evaluation outputs
+test_results_*.json
+*_results.json
+escalation_evaluation_results.json
+false_negatives_raw.json
+threshold_calibration_results.json
+
+# Jupyter notebooks
+*.ipynb
+
+# Dataset files
+datasets/**/*.jsonl
+datasets/**/*.csv
+datasets/**/*.json
+
+# Large JSON files
+*.json
+!package.json
+!tsconfig.json
+!*.config.json
+!jailbreak_test_dataset.json
+!dataset.json
+
+# Temporary and cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
 

@@ -192,7 +192,7 @@ def freeze_model(version_name: Optional[str] = None, description: Optional[str] 
         
         f.write("Model Files:\n")
         for file_name, exists in metadata['model_files'].items():
-            status = "✓" if exists else "✗"
+            status = "[OK]" if exists else "[MISSING]"
             f.write(f"  {status} {file_name}\n")
         
         f.write(f"\nModel Complete: {'Yes' if metadata['model_complete'] else 'No'}\n")
@@ -279,7 +279,7 @@ if __name__ == "__main__":
     print(f"Date: {metadata['freeze_date']}")
     print(f"\nFiles Frozen:")
     for file_name in copied_files:
-        print(f"  ✓ {file_name}")
+        print(f"  [OK] {file_name}")
     
     print(f"\nPerformance Summary:")
     perf = metadata['performance_summary']['unseen_dataset']

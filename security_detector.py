@@ -355,8 +355,8 @@ class SecurityJailbreakDetector:
         prefer_false_positives: bool = True,
         enable_whitelist: bool = True,
         enable_escalation: bool = True,
-        escalation_low_threshold: float = 0.30,
-        escalation_high_threshold: float = 0.60,
+        escalation_low_threshold: float = 0.25,  # Lowered from 0.30 for better recall
+        escalation_high_threshold: float = 0.55,  # Lowered from 0.60 for better recall
         escalation_mode: str = "degraded_response"
     ):
         """
@@ -466,36 +466,21 @@ class SecurityJailbreakDetector:
                     # If label is 'benign', confidence is benign prob, so jailbreak prob = 1 - confidence
                     ml_prob_jailbreak = ml_confidence if ml_label == 'jailbreak_attempt' else (1.0 - ml_confidence)
                 
-                # CRITICAL FIX: If ML says "jailbreak_attempt", always block regardless of confidence
-                # The ML model has high recall (98.18%), so we trust its jailbreak predictions
-                if ml_label == 'jailbreak_attempt':
-                    # ML detected jailbreak - block it (security-first)
-                    return SecurityResult(
-                        is_jailbreak=True,
-                        is_policy_violation=is_policy_violation,
-                        is_benign=False,
-                        confidence=ml_prob_jailbreak,
-                        detection_method='ml',
-                        matched_patterns=matched_patterns,
-                        risk_score=min(0.95, ml_prob_jailbreak + 0.1),
-                        whitelist_result=None,
-                        jailbreak_probability=ml_prob_jailbreak
-                    )
-                
-                # Step 2a: Confidence-Based Escalation Layer (only for ML "benign" predictions)
-                # Escalation helps with uncertain benign predictions, not jailbreak predictions
+                # Step 2a: Confidence-Based Escalation Layer (applied to ALL ML predictions)
+                # This is the critical improvement: use probability-based escalation instead of binary label
+                # This catches cases where ML says "benign" but probability suggests jailbreak risk
                 if self.enable_escalation and self.escalation_handler:
                     escalation_result = self.escalation_handler.decide(ml_prob_jailbreak)
                     
                     # Log escalation decision
                     logger.debug(
                         f"Escalation decision: {escalation_result.action.value} "
-                        f"(prob={ml_prob_jailbreak:.3f}, tier={escalation_result.confidence_tier})"
+                        f"(prob={ml_prob_jailbreak:.3f}, tier={escalation_result.confidence_tier}, ml_label={ml_label})"
                     )
                     
-                    # Handle escalation actions (only for benign predictions)
+                    # Handle escalation actions based on probability, not just label
                     if escalation_result.action == EscalationAction.BLOCK:
-                        # High confidence jailbreak probability from benign prediction - block
+                        # High confidence jailbreak probability - block (even if ML label says benign)
                         return SecurityResult(
                             is_jailbreak=True,
                             is_policy_violation=is_policy_violation,
@@ -511,7 +496,7 @@ class SecurityJailbreakDetector:
                         )
                     
                     elif escalation_result.action == EscalationAction.ALLOW:
-                        # Low confidence jailbreak probability - allow (ML says benign with high confidence)
+                        # Low confidence jailbreak probability - allow (clearly benign)
                         return SecurityResult(
                             is_jailbreak=False,
                             is_policy_violation=is_policy_violation,
@@ -527,8 +512,9 @@ class SecurityJailbreakDetector:
                         )
                     
                     else:
-                        # Medium confidence - escalate (uncertain benign prediction)
-                        # Conservative: treat uncertain as jailbreak
+                        # Medium confidence - conservative escalation: treat uncertain as jailbreak
+                        # This is the key improvement: medium-risk prompts are blocked, not allowed
+                        # This should reduce false negatives from ~19.2% to <10%
                         return SecurityResult(
                             is_jailbreak=True,
                             is_policy_violation=is_policy_violation,
@@ -542,6 +528,23 @@ class SecurityJailbreakDetector:
                             escalation_reason=escalation_result.reason,
                             jailbreak_probability=ml_prob_jailbreak
                         )
+                
+                # Step 2b: Fallback to traditional threshold-based decision (if escalation disabled)
+                # CRITICAL: If ML says "jailbreak_attempt", always block regardless of confidence
+                # The ML model has high recall (98.18%), so we trust its jailbreak predictions
+                if ml_label == 'jailbreak_attempt':
+                    # ML detected jailbreak - block it (security-first)
+                    return SecurityResult(
+                        is_jailbreak=True,
+                        is_policy_violation=is_policy_violation,
+                        is_benign=False,
+                        confidence=ml_prob_jailbreak,
+                        detection_method='ml',
+                        matched_patterns=matched_patterns,
+                        risk_score=min(0.95, ml_prob_jailbreak + 0.1),
+                        whitelist_result=None,
+                        jailbreak_probability=ml_prob_jailbreak
+                    )
                 
                 # Step 2b: Traditional threshold-based decision (if escalation disabled)
                 is_jailbreak_ml = ml_prob_jailbreak >= self.jailbreak_threshold

@@ -3,10 +3,12 @@ Confidence-Based Escalation Handler
 
 Implements a patent-friendly escalation layer for uncertain predictions.
 
-Architecture:
-- Low confidence (< 0.30): Allow (clearly benign)
-- High confidence (> 0.60): Block (clearly malicious)
-- Medium confidence (0.30-0.60): Escalate (uncertain, needs review)
+    Architecture:
+    - Low confidence (< 0.25): Allow (clearly benign)
+    - High confidence (> 0.55): Block (clearly malicious)
+    - Medium confidence (0.25-0.55): Escalate → Block (uncertain, conservative: treat as jailbreak)
+    
+    Note: Medium-risk prompts are blocked (not escalated) to maximize recall and minimize false negatives.
 
 Escalation Actions:
 - Degraded response (limited capabilities)
@@ -53,16 +55,16 @@ class ConfidenceEscalationHandler:
     
     def __init__(
         self,
-        low_threshold: float = 0.30,
-        high_threshold: float = 0.60,
+        low_threshold: float = 0.25,
+        high_threshold: float = 0.55,
         escalation_mode: str = "degraded_response"
     ):
         """
         Initialize escalation handler.
         
         Args:
-            low_threshold: Below this = allow (default: 0.30)
-            high_threshold: Above this = block (default: 0.60)
+            low_threshold: Below this = allow (default: 0.25, optimized for recall)
+            high_threshold: Above this = block (default: 0.55, optimized for recall)
             escalation_mode: Default escalation action ('degraded_response', 'safe_mode', 'clarify', 'sandbox')
         """
         self.low_threshold = low_threshold
@@ -155,4 +157,5 @@ class ConfidenceEscalationHandler:
         
         else:
             return f"Prompt escalated - requires review (risk: {result.jailbreak_probability:.1%})"
+
 
